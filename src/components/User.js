@@ -7,7 +7,7 @@ class User extends Component {
         return (
             <div>
                 <label htmlFor="">User Name is {this.props.userName}</label>
-                <br/>
+                <br />
                 <label htmlFor="">Iis password is ******* ({this.props.pass}) </label>
             </div>
         )

@@ -1,36 +1,40 @@
 import React, { Component } from 'react';
 import LoginPage from './components/LoginPage';
 import User from './components/User'
+import DefaultUsers from './DefaultUsers';
 import './App.css';
 
 
 class App extends Component {
-  constructor(){
-    super();
-    //this.state = this.state.bind(this);
-  }
-  
-  
-    state = {
-      user : {
-        name : 'admin',
-        pass : 'admin'
-      }
+
+    constructor() {
+        super();
+        //this.state = this.state.bind(this);
     }
-  
 
-  render(){
 
+    state = {
+        user: null,
+        credentials: {
+            ...DefaultUsers
+        }
+    }
 
     
-    return(
-      <div>
-        <LoginPage />
-        <br/>
-        <User userName={this.state.user.name} pass={this.state.user.pass} />
-      </div>
-    )
-  }
+    render() {
+
+        return (
+            <div>
+                <h1>
+                    Challenge React Application
+                </h1>
+                {this.state.user === null ?
+                <LoginPage /> : <User />
+            }           
+                
+            </div>
+        )
+    }
 }
 
 export default App;
