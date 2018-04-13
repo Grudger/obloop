@@ -11,6 +11,7 @@ class App extends Component {
     constructor() {
         super();
         this.addUser = this.addUser.bind(this);
+        this.bitFlip = this.addUser.bind(this);
     }
 
 
@@ -18,7 +19,8 @@ class App extends Component {
         user: null,
         credentials: {
             ...DefaultUsers
-        }
+        },
+        loggedin : false
     }
 
     addUser(user) {
@@ -30,6 +32,19 @@ class App extends Component {
         this.setState({ credentials });
     }
 
+    bitFlip(loginUser){
+        console.log(loginUser);
+        console.log('Bye' + this.state.loggedin);
+        
+        this.setState({ 
+            user: this.state.credentials[loginUser],
+            loggedin : !this.state.loggedin            
+            });
+        
+        //this.setState.loggedin(temp);
+        
+    }
+
     render() {
 
         return (
@@ -39,7 +54,7 @@ class App extends Component {
                 </h1>
                 {this.state.user === null ?
                     <div>
-                        <LoginPage allUsers={this.state.credentials} />
+                        <LoginPage allUsers={this.state.credentials} userState={this.bitFlip} />
                         <br />
                         <Register addUser={this.addUser} />
                     </div> : <User />
