@@ -13,11 +13,11 @@ class LoginPage extends Component {
         Object
             .keys(this.props.allUsers)
             .map(key => {
+
                 if (this.props.allUsers[key].name === this.name.value)
                     if (this.props.allUsers[key].pass === this.pass.value) {
                         //this.props.loggedIn(true);               
                         this.props.userState(this.props.allUsers[key]);
-                        return key.name;
                     }
                 return key.name;
 
@@ -30,7 +30,7 @@ class LoginPage extends Component {
 
         return (
             <div>
-                <form ref={(input) => this.LoginForm = (input)} onSubmit={ e => this.doLogin(e)} >
+                <form ref={(input) => this.LoginForm = (input)} onSubmit={e => this.doLogin(e)} >
                     <div>
                         <label htmlFor="userName">User Name</label>
                         <input type="text" ref={(input) => this.name = input} placeholder='User Name' id='userName' />

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import LoginPage from './components/LoginPage';
-import User from './components/User'
+import User from './components/User';
 import DefaultUsers from './DefaultUsers';
-import Register from './components/RegisterUser'
+import Register from './components/RegisterUser';
+import Books from './components/Books';
+import DefaultBooks from './DefaultBooks';
 import './App.css';
-
 
 class App extends Component {
 
@@ -12,16 +13,17 @@ class App extends Component {
         super();
         this.addUser = this.addUser.bind(this);
         this.bitFlip = this.bitFlip.bind(this);
+
+        this.state = {
+            user: JSON.parse(localStorage.getItem('user')) || null,
+            credentials: {
+                ...DefaultUsers
+            },
+            loggedin: JSON.parse(localStorage.getItem('loggedin')) || false,
+            books: []
+        }
     }
 
-
-    state = {
-        user: null,
-        credentials: {
-            ...DefaultUsers
-        },
-        loggedin : false
-    }
 
     addUser(user) {
         const credentials = { ...this.state.credentials };
@@ -32,16 +34,29 @@ class App extends Component {
         this.setState({ credentials });
     }
 
-    bitFlip(LoggedUser){
-        console.log(LoggedUser);
-        console.log('Bye ' + this.state.loggedin);
-        this.setState({ 
-            user : LoggedUser ,           
-            loggedin : !this.state.loggedin            
-        }, () => {
-            localStorage.setItem('user', JSON.stringify(this.state.user));
-            localStorage.setItem('loggedin', JSON.stringify(this.state.loggedin));
-        });
+    bitFlip(LoggedUser) {
+        //console.log(LoggedUser);
+        //console.log('Bye ' + this.state.loggedin);
+        if (LoggedUser != null) {
+            this.setState({
+                user: LoggedUser,
+                loggedin: !this.state.loggedin
+            }, () => {
+                localStorage.setItem('user', JSON.stringify(this.state.user));
+                localStorage.setItem('loggedin', JSON.stringify(this.state.loggedin));
+            });
+        }
+        else {
+            this.setState({
+                user: null,
+                loggedin: !this.state.loggedin
+            }, () => {
+                localStorage.setItem('user', null);
+                localStorage.setItem('loggedin', JSON.stringify(!this.state.loggedin));
+            });
+            console.log('Logged out');
+
+        }
     }
 
     render() {
@@ -53,12 +68,15 @@ class App extends Component {
                 </h1>
                 {this.state.user === null ?
                     <div>
-                        <LoginPage allUsers={this.state.credentials} userState={this.bitFlip} state = {this.state} />
+                        <LoginPage allUsers={this.state.credentials} userState={this.bitFlip} state={this.state} />
                         <br />
                         <Register addUser={this.addUser} />
-                    </div> : <User userName={this.state.user.name} />
-
-                }           }
+                    </div> :
+                    <div>
+                        <User userName={this.state.user.name} userState={this.bitFlip} />
+                        <Books bookList={DefaultBooks} />
+                    </div>
+                }
 
             </div>
         )

@@ -6,9 +6,10 @@ class User extends Component {
 
         return (
             <div>
-                <label htmlFor="">User Name is {this.props.userName}</label>
+                <button onClick={e => { this.props.userState(null) }}>Logout</button>
                 <br />
-                <label htmlFor="">Iis password is ******* ({this.props.pass}) </label>
+                <p>User Name is {this.props.userName} </p>
+                <p>is password is ******* ({this.props.pass})</p>
             </div>
         )
     }
