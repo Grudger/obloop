@@ -13,11 +13,10 @@ class LoginPage extends Component {
         Object
             .keys(this.props.allUsers)
             .map(key => {
-                console.log("Login Page line 16" + key);
                 if (this.props.allUsers[key].name === this.name.value)
                     if (this.props.allUsers[key].pass === this.pass.value) {
-                        console.log('Hello');
-                        this.props.userState(key);
+                        //this.props.loggedIn(true);               
+                        this.props.userState(this.props.allUsers[key]);
                         return key.name;
                     }
                 return key.name;

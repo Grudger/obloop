@@ -11,7 +11,7 @@ class App extends Component {
     constructor() {
         super();
         this.addUser = this.addUser.bind(this);
-        this.bitFlip = this.addUser.bind(this);
+        this.bitFlip = this.bitFlip.bind(this);
     }
 
 
@@ -32,17 +32,16 @@ class App extends Component {
         this.setState({ credentials });
     }
 
-    bitFlip(loginUser){
-        console.log(loginUser);
-        console.log('Bye' + this.state.loggedin);
-        
+    bitFlip(LoggedUser){
+        console.log(LoggedUser);
+        console.log('Bye ' + this.state.loggedin);
         this.setState({ 
-            user: this.state.credentials[loginUser],
+            user : LoggedUser ,           
             loggedin : !this.state.loggedin            
-            });
-        
-        //this.setState.loggedin(temp);
-        
+        }, () => {
+            localStorage.setItem('user', JSON.stringify(this.state.user));
+            localStorage.setItem('loggedin', JSON.stringify(this.state.loggedin));
+        });
     }
 
     render() {
@@ -54,10 +53,10 @@ class App extends Component {
                 </h1>
                 {this.state.user === null ?
                     <div>
-                        <LoginPage allUsers={this.state.credentials} userState={this.bitFlip} />
+                        <LoginPage allUsers={this.state.credentials} userState={this.bitFlip} state = {this.state} />
                         <br />
                         <Register addUser={this.addUser} />
-                    </div> : <User />
+                    </div> : <User userName={this.state.user.name} />
 
                 }           }
 
