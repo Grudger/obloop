@@ -4,7 +4,7 @@ import User from './components/User';
 import DefaultUsers from './DefaultUsers';
 import Register from './components/RegisterUser';
 import Books from './components/Books';
-import DefaultBooks from './DefaultBooks';
+
 import './App.css';
 
 class App extends Component {
@@ -16,11 +16,9 @@ class App extends Component {
 
         this.state = {
             user: JSON.parse(localStorage.getItem('user')) || null,
-            credentials: {
-                ...DefaultUsers
-            },
-            loggedin: JSON.parse(localStorage.getItem('loggedin')) || false,
-            books: []
+            credentials: JSON.parse(localStorage.getItem('credentials')) || { ...DefaultUsers },
+            
+            loggedin: JSON.parse(localStorage.getItem('loggedin')) || false
         }
     }
 
@@ -30,8 +28,9 @@ class App extends Component {
         const timestamp = Date.now();
 
         credentials[`user-${timestamp}`] = user;
-
+        
         this.setState({ credentials });
+        localStorage.setItem('credentials', JSON.stringify(this.state.credentials));
     }
 
     bitFlip(LoggedUser) {
@@ -74,7 +73,7 @@ class App extends Component {
                     </div> :
                     <div>
                         <User userName={this.state.user.name} userState={this.bitFlip} />
-                        <Books bookList={DefaultBooks} />
+                        <Books />
                     </div>
                 }
 
