@@ -26,6 +26,12 @@ class Books extends Component {
         this.bookForm.reset();
     }
 
+    modifyBook(e){
+        e.preventDefault();
+        
+
+    }
+
 
     render() {
         return (
@@ -34,16 +40,15 @@ class Books extends Component {
                 <ul className="book-list">
                     {
                         Object
-                            .keys(BookList)
+                            .keys(this.state.books)
                             .map(key =>
-                                <li key={BookList[key].name}>
-                                    <label > Book Name</label>   {BookList[key].name}
+                                <li key={this.state.books[key].name}>
+                                    <label > Book Name</label>   {this.state.books[key].name}
                                     <br />
-                                    <label > Book Author</label>   {BookList[key].auth}
+                                    <label > Book Author</label>   {this.state.books[key].auth}
                                 </li>
                             )
                     }
-
                 </ul>
 
                 <h4>Add a new book</h4>
