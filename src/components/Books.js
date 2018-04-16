@@ -6,6 +6,8 @@ class Books extends Component {
     constructor() {
         super();
         this.addBook = this.addBook.bind(this);
+        this.changeHandler = this.changeHandler.bind(this);
+
         this.state = {
             books: JSON.parse(localStorage.getItem('books')) || { ...BookList }
         }
@@ -16,19 +18,31 @@ class Books extends Component {
         const books = { ...this.state.books };
         const newBook = {
             name: this.title.value,
-            author: this.author.value
+            auth: this.author.value
         };
         books['book_' + Date.now()] = newBook;
 
         console.log('new book added');
         this.setState({ books });
         localStorage.setItem('books', JSON.stringify(this.state.books));
-        this.bookForm.reset();
+        this.bookAddForm.reset();
     }
 
-    modifyBook(e){
-        e.preventDefault();
-        
+    changeHandler(e, key) {
+        console.log(key);
+        console.log(e.target.name);
+
+        const book = { ...this.state.books[key] };
+        const updatedBook = {
+            ...book,
+            [e.target.name]: e.target.value
+        };
+        const books = { ...this.state.books };
+        books[key] = updatedBook;
+        this.setState({ books });
+        localStorage.setItem('books', JSON.stringify(this.state.books));
+        // books[key].e.target.name = e.target.value;
+        // console.log(books);
 
     }
 
@@ -42,18 +56,26 @@ class Books extends Component {
                         Object
                             .keys(this.state.books)
                             .map(key =>
-                                <li key={this.state.books[key].name}>
-                                    <label > Book Name</label>   {this.state.books[key].name}
-                                    <br />
-                                    <label > Book Author</label>   {this.state.books[key].auth}
-                                </li>
+                                <div key={key}>
+                                    <li key={this.state.books[key].name}>
+                                        <label > Book Name</label>
+                                        <input type="text" defaultValue={this.state.books[key].name}
+                                            name='name' onChange={e => this.changeHandler(e, key)} />
+
+                                        <br />
+                                        <label > Book Author</label>
+                                        <input type="text" defaultValue={this.state.books[key].auth}
+                                            name='auth' onChange={e => this.changeHandler(e, key)} />
+                                    </li>
+                                    {/* <button type='submit'>Modify</button> */}
+                                </div>
                             )
                     }
                 </ul>
 
                 <h4>Add a new book</h4>
                 <div>
-                    <form ref={input => this.bookForm = (input)} onSubmit={e => this.addBook(e)}>
+                    <form ref={input => this.bookAddForm = (input)} onSubmit={e => this.addBook(e)}>
                         <label htmlFor="">Book title</label>
                         <input type="text" ref={(input) => this.title = (input)} />
                         <label htmlFor="">Author</label>
