@@ -24,12 +24,13 @@ class Books extends Component {
 
         console.log('new book added');
         this.setState({ books });
-        localStorage.setItem('books', JSON.stringify(this.state.books));
         this.bookAddForm.reset();
+        localStorage.setItem('books', JSON.stringify(this.state.books));
     }
 
     changeHandler(e, key) {
         console.log(key);
+        e.preventDefault();
         console.log(e.target.name);
 
         const book = { ...this.state.books[key] };
@@ -67,7 +68,7 @@ class Books extends Component {
                                         <input type="text" defaultValue={this.state.books[key].auth}
                                             name='auth' onChange={e => this.changeHandler(e, key)} />
                                     </li>
-                                    {/* <button type='submit'>Modify</button> */}
+                                    {/* <button onClick={e => this.changeHandler(e, key)}>Modify</button> */}
                                 </div>
                             )
                     }
