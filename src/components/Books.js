@@ -45,8 +45,7 @@ class Books extends Component {
         this.setState({ books },
             () =>
                 localStorage.setItem('books', JSON.stringify(this.state.books)));
-        // books[key].e.target.name = e.target.value;
-        // console.log(books);
+        
 
     }
 
@@ -58,14 +57,7 @@ class Books extends Component {
         Object
             .values(data)
             .map(key => { arr.push(key); });
-        console.log(JSON.stringify(arr));
-
-        /* try {
-            JSON.parse(JSON.stringify(arr))
-        }
-        catch (e) {
-            console.error(e);
-        } */
+        
         return (arr);
 
     }
@@ -95,8 +87,8 @@ class Books extends Component {
                                 </div>
                             )
                     }
-                    <button onClick={() => this.dataStringify()} >Click me</button>
-                    <br />
+                    
+                    <hr />
                     <CSVLink data={(this.dataStringify())} headers={[{label : 'title', key: 'name'},
                      {label: 'author', key: 'auth'}]} > Download here </CSVLink>
 
