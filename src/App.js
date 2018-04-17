@@ -4,6 +4,8 @@ import User from './components/User';
 import DefaultUsers from './DefaultUsers';
 import Register from './components/RegisterUser';
 import Books from './components/Books';
+import {CSVLink} from 'react-csv';
+
 
 import './App.css';
 
@@ -72,6 +74,7 @@ class App extends Component {
                         <Register addUser={this.addUser} />
                     </div> :
                     <div>
+                        <CSVLink  data={JSON.stringify(this.state.credentials)} >Download Credentials</CSVLink>
                         <User userName={this.state.user.name} userState={this.bitFlip} />
                         <Books />
                     </div>

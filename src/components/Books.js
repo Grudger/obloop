@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BookList from '../DefaultBooks';
+import { CSVLink } from 'react-csv';
 
 class Books extends Component {
 
@@ -7,6 +8,7 @@ class Books extends Component {
         super();
         this.addBook = this.addBook.bind(this);
         this.changeHandler = this.changeHandler.bind(this);
+        this.dataStringify = this.dataStringify.bind(this);
 
         this.state = {
             books: JSON.parse(localStorage.getItem('books')) || { ...BookList }
@@ -49,6 +51,26 @@ class Books extends Component {
     }
 
 
+    dataStringify() {
+        let data = this.state.books;
+        let arr = [];
+
+        Object
+            .values(data)
+            .map(key => { arr.push(key); });
+        console.log(JSON.stringify(arr));
+
+        /* try {
+            JSON.parse(JSON.stringify(arr))
+        }
+        catch (e) {
+            console.error(e);
+        } */
+        return (arr);
+
+    }
+
+
     render() {
         return (
             <div>
@@ -73,19 +95,24 @@ class Books extends Component {
                                 </div>
                             )
                     }
+                    <button onClick={() => this.dataStringify()} >Click me</button>
+                    <br />
+                    <CSVLink data={(this.dataStringify())} headers={[{label : 'title', key: 'name'},
+                     {label: 'author', key: 'auth'}]} > Download here </CSVLink>
+
                 </ul>
 
-                <h4>Add a new book</h4>
-                <div>
-                    <form ref={input => this.bookAddForm = (input)} onSubmit={e => this.addBook(e)}>
-                        <label htmlFor="">Book title</label>
-                        <input type="text" ref={(input) => this.title = (input)} />
-                        <label htmlFor="">Author</label>
-                        <input type="text" ref={(input) => this.author = (input)} />
-                        <button type='submit' > + Add new book</button>
-                    </form>
-                </div>
+            <h4>Add a new book</h4>
+            <div>
+                <form ref={input => this.bookAddForm = (input)} onSubmit={e => this.addBook(e)}>
+                    <label htmlFor="">Book title</label>
+                    <input type="text" ref={(input) => this.title = (input)} />
+                    <label htmlFor="">Author</label>
+                    <input type="text" ref={(input) => this.author = (input)} />
+                    <button type='submit' > + Add new book</button>
+                </form>
             </div>
+            </div >
         )
     }
 }
