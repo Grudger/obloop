@@ -17,7 +17,7 @@ class App extends Component {
         this.state = {
             user: JSON.parse(localStorage.getItem('user')) || null,
             credentials: JSON.parse(localStorage.getItem('credentials')) || { ...DefaultUsers },
-            
+
             loggedin: JSON.parse(localStorage.getItem('loggedin')) || false
         }
     }
@@ -28,9 +28,9 @@ class App extends Component {
         const timestamp = Date.now();
 
         credentials[`user-${timestamp}`] = user;
-        
-        this.setState({ credentials });
-        localStorage.setItem('credentials', JSON.stringify(this.state.credentials));
+
+        this.setState({ credentials }, () =>
+            localStorage.setItem('credentials', JSON.stringify(this.state.credentials)));
     }
 
     bitFlip(LoggedUser) {

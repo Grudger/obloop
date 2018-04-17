@@ -23,15 +23,15 @@ class Books extends Component {
         books['book_' + Date.now()] = newBook;
 
         console.log('new book added');
-        this.setState({ books });
+        this.setState({ books },
+            () =>
+                localStorage.setItem('books', JSON.stringify(this.state.books)));
         this.bookAddForm.reset();
-        localStorage.setItem('books', JSON.stringify(this.state.books));
+
     }
 
     changeHandler(e, key) {
-        console.log(key);
         e.preventDefault();
-        console.log(e.target.name);
 
         const book = { ...this.state.books[key] };
         const updatedBook = {
@@ -40,8 +40,9 @@ class Books extends Component {
         };
         const books = { ...this.state.books };
         books[key] = updatedBook;
-        this.setState({ books });
-        localStorage.setItem('books', JSON.stringify(this.state.books));
+        this.setState({ books },
+            () =>
+                localStorage.setItem('books', JSON.stringify(this.state.books)));
         // books[key].e.target.name = e.target.value;
         // console.log(books);
 
