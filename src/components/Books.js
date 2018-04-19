@@ -101,10 +101,15 @@ class Books extends Component {
                     .map(key => {
                         console.log(key);
                         // because multiple timestamps are in the same iteration, some books won't add from csv 
-                        importedBooks['book_' + Date.now()] = key;
+                        importedBooks = {
+                            ...importedBooks,
+                            ['book_' + Date.now()] : key
+                        }
+                        //importedBooks['book_' + Date.now()] = key;
+                        return key;
                     })
                 console.log(importedBooks);
-                this.setState({ books: importedBooks }, () =>
+                this.setState({ books: {...importedBooks} }, () =>
                     localStorage.setItem('books', JSON.stringify(this.state.books)));
 
                 return data;
