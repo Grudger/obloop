@@ -3,6 +3,7 @@ import BookList from '../DefaultBooks';
 import { CSVLink } from 'react-csv';
 import Dropzone from 'react-dropzone';
 import csv from 'csv';
+import CompanyDetails from './CompanyDetail';
 
 class Books extends Component {
 
@@ -51,8 +52,6 @@ class Books extends Component {
         this.setState({ books },
             () =>
                 localStorage.setItem('books', JSON.stringify(this.state.books)));
-
-
     }
 
     dataStringify() {
@@ -149,7 +148,7 @@ class Books extends Component {
 
                     <hr />
                     <CSVLink data={(this.dataStringify())} headers={[{ label: 'name', key: 'name' },
-                    { label: 'auth', key: 'auth' }]} > Download here </CSVLink>
+                    { label: 'auth', key: 'auth' }]} > Download Books </CSVLink>
                     <Dropzone name='dzone' onDrop={(e) => this.onDrop(e)} />
 
 
@@ -165,6 +164,7 @@ class Books extends Component {
                         <button type='submit' > + Add new book</button>
                     </form>
                 </div>
+                <CompanyDetails />               
             </div>
         )
     }
